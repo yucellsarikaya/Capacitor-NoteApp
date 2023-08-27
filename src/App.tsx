@@ -1,18 +1,33 @@
-import React from 'react';
-import './App.css';
-import Header from './Components/Header';
-import NoteList from './Components/NoteList';
-
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Header from "./Components/Header";
+import NoteList from "./Components/NoteList";
+import { NotesStore as Store } from "./Operations/NotesStore";
 function App() {
-  const notes = [
-    'Bugün toplantı saat 14:00\'te',
-    'Alışveriş listesi: süt, ekmek, yumurta',
-    'Spor yapmayı unutma!'
-  ];
+  const [notes, setNotes] = React.useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      listeyiYenile();
+    }
+    fetchData();
+  }, []);
+  const listeyiYenile = async () => {
+    const notList = await Store.NotlariListele("notes");
+    setNotes(notList);
+  };
   return (
     <div>
-      <Header/>
-      <NoteList notes={notes} />
+      <Header
+        ListeyiYenile={async function () {
+          await listeyiYenile();
+        }}
+      />
+      <NoteList
+        notes={notes}
+        ListeyiYenile={async function () {
+          await listeyiYenile();
+        }}
+      />
     </div>
   );
 }
