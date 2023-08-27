@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
-import { NotesStore as Store } from "../Operations/NotesStore";
+import { NotesStore as Store } from "../Store/NotesStore";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -26,7 +26,7 @@ const ModalComponent = ({
   show: boolean;
   showOff: () => void;
   note?: { id: string; title: string; contents: string };
-  durum: "duzenle" | "ekle";
+  durum: "duzenle" | "ekle" | "goruntule";
 }) => {
   const [title, setTitle] = React.useState<string>("");
   const [contents, setContents] = React.useState<string>("");
@@ -40,6 +40,7 @@ const ModalComponent = ({
       <>
         <Box sx={style}>
           <TextField
+            disabled={durum === "goruntule" ? true : false}
             id="outlined-multiline-flexible"
             label="Not Başlığı"
             multiline
@@ -52,6 +53,7 @@ const ModalComponent = ({
           <br />
           <br />
           <TextField
+            disabled={durum === "goruntule" ? true : false}
             id="outlined-multiline-static"
             label="Not İçeriği"
             placeholder="Not İçeriği"
@@ -63,27 +65,31 @@ const ModalComponent = ({
             rows={4}
           />
           <div>
-            <Button
-              color="secondary"
-              variant="contained"
-              size="small"
-              startIcon={<SaveAsIcon />}
-              onClick={async function () {
-                if (durum === "ekle") {
-                  await Store.NotEkle({ title: title, contents: contents });
-                  showOff();
-                } else if (durum === "duzenle") {
-                  await Store.NotDuzenle({
-                    id: note ? note.id : "",
-                    title: title,
-                    contents: contents,
-                  });
-                  showOff();
-                }
-              }}
-            >
-              {durum === "duzenle" ? "Düzenle" : "Ekle"}
-            </Button>
+            {durum === "goruntule" ? (
+              <></>
+            ) : (
+              <Button
+                color="secondary"
+                variant="contained"
+                size="small"
+                startIcon={<SaveAsIcon />}
+                onClick={async function () {
+                  if (durum === "ekle") {
+                    await Store.NotEkle({ title: title, contents: contents });
+                    showOff();
+                  } else if (durum === "duzenle") {
+                    await Store.NotDuzenle({
+                      id: note ? note.id : "",
+                      title: title,
+                      contents: contents,
+                    });
+                    showOff();
+                  }
+                }}
+              >
+                {durum === "duzenle" ? "Düzenle" : "Ekle"}
+              </Button>
+            )}
           </div>
         </Box>
       </>

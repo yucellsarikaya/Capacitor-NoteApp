@@ -3,7 +3,7 @@ import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalComponent from "./ModalComponent";
-import { NotesStore as Store } from "../Operations/NotesStore";
+import { NotesStore as Store } from "../Store/NotesStore";
 
 interface NoteItemProps {
   note: { id: string; title: string; contents: string };
@@ -12,11 +12,22 @@ interface NoteItemProps {
 
 const Note: React.FC<NoteItemProps> = ({ note, ListeyiYenile }) => {
   const [open, setOpen] = React.useState(false);
+  const [openDurum, setOpenDurum] = React.useState<
+    "duzenle" | "ekle" | "goruntule"
+  >("goruntule");
+
   return (
     <>
       <li>
         <tr>
-          <th>{note.title}&nbsp;&nbsp;</th>
+          <th
+            onClick={async function () {
+              setOpenDurum("goruntule");
+              setOpen(true);
+            }}
+          >
+            {note.title}&nbsp;&nbsp;
+          </th>
           <th>
             <Button
               color="secondary"
@@ -24,6 +35,7 @@ const Note: React.FC<NoteItemProps> = ({ note, ListeyiYenile }) => {
               size="small"
               startIcon={<EditIcon />}
               onClick={function () {
+                setOpenDurum("duzenle");
                 setOpen(true);
               }}
             >
@@ -61,7 +73,7 @@ const Note: React.FC<NoteItemProps> = ({ note, ListeyiYenile }) => {
           setOpen(false);
         }}
         note={{ id: note.id, title: note.title, contents: note.contents }}
-        durum="duzenle"
+        durum={openDurum}
       />
     </>
   );

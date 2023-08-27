@@ -43,7 +43,7 @@ export class FileOperationsCapacitor {
     }
   };
 
-  //Text dosyasına yazma işemi yapar
+  
   public static writeSecretFile = async (key: string, item: any[]) => {
     try {
       await Filesystem.writeFile({

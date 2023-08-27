@@ -1,14 +1,5 @@
 import React from "react";
 import Note from "./Note";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 
 const NoteList = ({
   notes,
@@ -19,7 +10,7 @@ const NoteList = ({
 }) => {
   return (
     <div className="note-list">
-      <h2>Notlar</h2>
+      <h2>Notes</h2>
 
       <ul>
         {notes.map((note: any, index: any) => (

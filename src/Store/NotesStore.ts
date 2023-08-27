@@ -1,4 +1,4 @@
-import { FileOperations as operations } from "./FileOperations";
+import { FileOperations as operations } from "../Operations/FileOperations";
 import { v4 as uuidv4 } from 'uuid';
 export class NotesStore {
     public static NotDuzenle = async (item:Note) => {

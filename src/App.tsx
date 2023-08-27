@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./Components/Header";
 import NoteList from "./Components/NoteList";
-import { NotesStore as Store } from "./Operations/NotesStore";
+import { NotesStore as Store } from "./Store/NotesStore";
 function App() {
   const [notes, setNotes] = React.useState([]);
   useEffect(() => {
