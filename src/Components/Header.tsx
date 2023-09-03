@@ -19,7 +19,7 @@ const Header = ({ ListeyiYenile }: { ListeyiYenile: () => void }) => {
                 setOpen(true);
               }}
             >
-              Note Add
+              ADD NOTE
             </Button>
           </div>
         </nav>

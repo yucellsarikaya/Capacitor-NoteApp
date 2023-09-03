@@ -42,7 +42,7 @@ const ModalComponent = ({
           <TextField
             disabled={durum === "goruntule" ? true : false}
             id="outlined-multiline-flexible"
-            label="Not Başlığı"
+            label="Header"
             multiline
             maxRows={4}
             defaultValue={note ? note.title : ""}
@@ -55,8 +55,8 @@ const ModalComponent = ({
           <TextField
             disabled={durum === "goruntule" ? true : false}
             id="outlined-multiline-static"
-            label="Not İçeriği"
-            placeholder="Not İçeriği"
+            label="Description"
+            placeholder="Description"
             defaultValue={note ? note.contents : ""}
             multiline
             onChange={(e) => {
@@ -87,7 +87,7 @@ const ModalComponent = ({
                   }
                 }}
               >
-                {durum === "duzenle" ? "Düzenle" : "Ekle"}
+                {durum === "duzenle" ? "EDIT" : "ADD"}
               </Button>
             )}
           </div>
