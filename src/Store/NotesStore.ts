@@ -1,6 +1,7 @@
 import { FileOperations as operations } from "../Operations/FileOperations";
 import { v4 as uuidv4 } from "uuid";
 import { GeolocationOperations } from "../Operations/GeolacationOperations";
+import { HapticsOperations } from "../Operations/HapticsOperations";
 export class NotesStore {
   public static NotDuzenle = async (item: Note) => {
     const noteList: Note[] = await this.NotlariListele("notes");
@@ -15,21 +16,23 @@ export class NotesStore {
         }
       });
       await operations.writeFile("notes", noteList);
+      await HapticsOperations.hapticsVibrate();
     }
   };
 
   public static NotEkle = async (item: Note) => {
     const noteList: Note[] = await this.NotlariListele("notes");
+    item.id = uuidv4();
+    const loc = await GeolocationOperations.CurrentPosition();
+    item.Latitude = loc?.coords.latitude.toString();
+    item.Longitude = loc?.coords.longitude.toString();
     if (noteList) {
-      item.id = uuidv4();
-      const loc = await GeolocationOperations.CurrentPosition();
-      item.Latitude = loc?.coords.latitude.toString();
-      item.Longitude = loc?.coords.longitude.toString();
       noteList.push(item);
       await operations.writeFile("notes", noteList);
     } else {
       await operations.writeFile("notes", [item]);
     }
+    await HapticsOperations.hapticsVibrate();
   };
 
   public static NotSil = async (item: Note) => {
