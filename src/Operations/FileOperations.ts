@@ -43,7 +43,6 @@ export class FileOperationsCapacitor {
     }
   };
 
-  
   public static writeSecretFile = async (key: string, item: any[]) => {
     try {
       await Filesystem.writeFile({
